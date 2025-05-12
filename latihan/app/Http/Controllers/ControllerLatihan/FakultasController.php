@@ -12,7 +12,7 @@ class FakultasController extends Controller
      */
     public function index()
     {
-        //
+        return(view('latihanLayout.fakultas.index'));
     }
 
     /**
@@ -36,7 +36,19 @@ class FakultasController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $fakultasList = [
+            1 => (object)[
+                    'nama' => 'Ilmu Komputer & Rekayasa',
+                    'deskripsi' => 'Fakultas yang membawahi jurusan ilmu komputer dan rekayasa'
+            ],
+            2 => (object)[
+                    'nama' => 'Ekonomi & Bisnis',
+                    'deskripsi' => 'Fakultas yang membawahi jurusan ekonomi dan bisnis'
+            ],
+        ];
+
+        $fakultas = $fakultasList[$id];
+        return view('latihanLayout.fakultas.detail', compact('fakultas'));
     }
 
     /**

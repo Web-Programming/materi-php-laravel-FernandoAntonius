@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class MateriController extends Controller
+class ProdiControllerContoh extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view("materi.index");
+        echo "ini adalah index";
     }
 
     /**
@@ -35,15 +35,16 @@ class MateriController extends Controller
      */
     public function show(string $id)
     {
-        //
+
     }
+
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        //
+        echo "Ini form edit prodi dengan id ". $id;
     }
 
     /**

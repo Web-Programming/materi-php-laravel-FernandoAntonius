@@ -12,7 +12,7 @@ class DosenController extends Controller
      */
     public function index()
     {
-        //
+        return(view('latihanLayout.dosen.index'));
     }
 
     /**
@@ -36,7 +36,25 @@ class DosenController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $dosenList = [
+            1 => (object)[
+                'nama' => 'Sir Mister',
+                'program' => 'Sistem Informasi',
+                'status' => 'Tetap',
+                'tanggal_lahir' => '01-01-1967',
+                'tempat_lahir' => 'Inggris'
+            ],
+            2 => (object)[
+                'nama' => 'Davis',
+                'program' => 'Informatika',
+                'status' => 'Kontrak',
+                'tanggal_lahir' => '17-08-1945',
+                'tempat_lahir' => 'Palembang'
+            ],
+        ];
+
+        $dosen = $dosenList[$id];
+        return view('latihanLayout.dosen.detail', compact('dosen'));
     }
 
     /**

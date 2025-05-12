@@ -12,10 +12,10 @@ class MahasiswaController extends Controller
      */
     public function index()
     {
-        //
+        return view('latihanLayout.mahasiswa.index');
     }
 
-    /**
+        /**
      * Show the form for creating a new resource.
      */
     public function create()
@@ -36,7 +36,32 @@ class MahasiswaController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $mahasiswaList = [
+            1 => (object)[
+                'nama' => 'Budiman Putra Beriman',
+                'program' => 'Sistem Informasi',
+                'status' => 'Aktif',
+                'tanggal_lahir' => '10-10-2006',
+                'tempat_lahir' => 'Palembang'
+            ],
+            2 => (object)[
+                'nama' => 'Luther',
+                'program' => 'Teknik Elektro',
+                'status' => 'Cuti',
+                'tanggal_lahir' => '10-03-2006',
+                'tempat_lahir' => 'Palembang'
+            ],
+            3 => (object)[
+                'nama' => 'Fernando',
+                'program' => 'Informatika',
+                'status' => 'Aktif',
+                'tanggal_lahir' => '15-02-2007',
+                'tempat_lahir' => 'Palembang'
+            ],
+        ];
+        
+        $mahasiswa = $mahasiswaList[$id];
+        return view('latihanLayout.mahasiswa.detail', compact('mahasiswa'));
     }
 
     /**
@@ -63,3 +88,4 @@ class MahasiswaController extends Controller
         //
     }
 }
+

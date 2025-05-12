@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('mahasiswa', function (Blueprint $table) {
             // $table->renameColumn('born_date','tanggal_lahir');
             // $table->renameColumn('nama_mahasiswa','nama');
-            // $table->text('alamat')->after('born_date');
+            // $table->text('alamat')->after('tanggal_lahir');
         });
     }
 

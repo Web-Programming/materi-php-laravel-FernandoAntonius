@@ -15,7 +15,7 @@
 @include('layout.footer')
 
 {{-- Extends --}}
-@extends('layout.master')
+@extends('layoutContoh.masterContoh')
 @section('title', 'Halaman Fakultas')
 
 @section('content')

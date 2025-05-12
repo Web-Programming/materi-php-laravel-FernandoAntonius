@@ -12,7 +12,7 @@ class ProdiController extends Controller
      */
     public function index()
     {
-        //
+        return(view('latihanLayout.prodi.index'));
     }
 
     /**
@@ -36,7 +36,40 @@ class ProdiController extends Controller
      */
     public function show(string $id)
     {
-        //
+            $prodiList = [
+                1 => (object)[
+                    'nama' => 'Sistem Informasi',
+                    'deskripsi' => 'Program Studi Sistem Informasi'
+                ],
+                2 => (object)[
+                    'nama' => 'Manajemen',
+                    'deskripsi' => 'Program Studi Manajemen'
+                ],
+                3 => (object)[
+                    'nama' => 'Akuntasi',
+                    'deskripsi' => 'Program Studi Akuntasi'
+                ],
+                4 => (object)[
+                    'nama' => 'Teknik Elektro',
+                    'deskripsi' => 'Program Studi Teknik Elektro'
+                ],
+                5 => (object)[
+                    'nama' => 'Informatika',
+                    'deskripsi' => 'Program Studi Informatika'
+                ],
+                6 => (object)[
+                    'nama' => 'Manajemen Informatika',
+                    'deskripsi' => 'Program Studi Manajemen Informatika'
+                ],
+                7 => (object)[
+                    'nama' => 'Magister Sistem Informasi',
+                    'deskripsi' => 'Program Studi Magister Sistem Informasi'
+                ],
+            ];
+    
+            $prodi = $prodiList[$id];
+    
+            return view('latihanLayout.prodi.detail', compact('prodi'));
     }
 
     /**

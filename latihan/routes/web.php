@@ -1,7 +1,10 @@
 <?php
 
-use App\Http\Controllers\MateriController;
-use App\Http\Controllers\ProdiController;
+use App\Http\Controllers\ControllerLatihan\MateriController;
+use App\Http\Controllers\ControllerLatihan\MahasiswaController;
+use App\Http\Controllers\ControllerLatihan\ProdiController;
+use App\Http\Controllers\ControllerLatihan\DosenController;
+use App\Http\Controllers\ControllerLatihan\FakultasController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -33,13 +36,30 @@ Route::get('/fakultas', function () {
     // $fakultas = [];
     $fakultas = ["Fakultas Ilmu Komputer dan Rekayasa", "Fakultas Ilmu Ekonomi"];
 
-    return view('fakultas.index', compact('fakultas', 'kampus'));
+    return view('fakultasContoh.index', compact('fakultas', 'kampus'));
 });
 
 Route::get('/materi/index', [MateriController::class,'index']);
 
-Route::get('/materi/detail/{$id}', [MateriController::class, 'detail']);
+# Route::get('/materi/detail/{$id}', [MateriControllerContoh::class, 'detail']);
 
-Route::resource('prodi', ProdiController::class);
+/*
+Route::resource('prodi', ProdiControllerContoh::class);
 
 Route::apiResource('api/mhs', MhsApiController::class);
+*/
+
+// Latihan Layout
+Route::resource('prodi', ProdiController::class);
+Route::resource('materi', MateriController::class);
+Route::resource('dosen', DosenController::class);
+Route::resource('mhs', MahasiswaController::class);
+Route::resource('fakultas', FakultasController::class);
+
+Route::get('/master', function(){
+    return view('latihanLayout.master');
+});
+
+Route::get('/master', function(){
+    return view('latihanLayout.masterisi');
+});

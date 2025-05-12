@@ -12,9 +12,9 @@ class MateriController extends Controller
      */
     public function index()
     {
-        //
+        return view('latihanLayout.materi.index');
     }
-
+    
     /**
      * Show the form for creating a new resource.
      */
@@ -36,7 +36,23 @@ class MateriController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $materiList = [
+            1 => (object)[
+                'nama' => 'Pengenalan Laravel',
+                'deskripsi' => 'Materi dasar tentang framework Laravel'
+            ],
+            2 => (object)[
+                'nama' => 'Routing Laravel',
+                'deskripsi' => 'Membahas penggunaan route dan controller'
+            ],
+            3 => (object)[
+                'nama' => 'Template',
+                'deskripsi' => 'Contoh Template'
+            ],
+        ];
+        
+        $materi = $materiList[$id];
+        return view('latihanLayout.materi.detail', compact('materi'));
     }
 
     /**
