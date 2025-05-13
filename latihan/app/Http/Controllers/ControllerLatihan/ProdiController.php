@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\ControllerLatihan;
 
 use App\Http\Controllers\Controller;
+use App\Models\Prodi;
 use Illuminate\Http\Request;
 
 class ProdiController extends Controller
@@ -12,7 +13,8 @@ class ProdiController extends Controller
      */
     public function index()
     {
-        return(view('latihanLayout.prodi.index'));
+         $listprodi = Prodi::all(); // Select * FROM prodi 
+        return view('latihanLayout.prodi.index'); // ['listprodi'=>$listprodi]));
     }
 
     /**
@@ -20,7 +22,7 @@ class ProdiController extends Controller
      */
     public function create()
     {
-        //
+        return view('latihanLayout.prodi.create');
     }
 
     /**
@@ -28,7 +30,24 @@ class ProdiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        Prodi::create([
+            'nama' => $data('nama'),
+            'deskripsi' => $data('deskripsi'),
+        ]);
+
+        /* Cara 2
+        Prodi::create([
+            'nama' => $data('nama'),
+            'deskripsi' => $data('deskripsi'),
+        ]); */
+
+        /* Cara 3
+        $newprodi = new Prodi();
+        $newprodi -> nama = $data['nama'];
+        $newprodi -> deskripsi = $data['deskripsi']; */
+        
+        return redirect('prodi')->with('status', 'Program Studi Berhasil Disimpan');
     }
 
     /**

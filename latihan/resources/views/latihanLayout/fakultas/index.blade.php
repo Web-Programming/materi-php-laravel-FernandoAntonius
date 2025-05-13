@@ -38,7 +38,9 @@
                         <td>{{ $fakultas->deskripsi }}</td>
                         <td>
                             <center>
-                                <a href="#" class="btn btn-info btn-sm">Detail</a>
+                                <a href="{{url('fakultas/' . $fakultas->id)}}" class="btn btn-info btn-sm">Detail</a>
+                                <a href="{{ url('fakultas/' . $fakultas->id . '/edit')}}"
+                                    class="btn btn-warning btn-sm">Edit</a>
                                 <button class="btn btn-danger btn-sm" onclick="return confirm('Hapus data ini?')">Hapus</button>
                             </center>
                         </td>

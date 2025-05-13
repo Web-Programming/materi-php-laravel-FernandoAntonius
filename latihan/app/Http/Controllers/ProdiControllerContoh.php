@@ -11,6 +11,7 @@ class ProdiControllerContoh extends Controller
      */
     public function index()
     {
+        $listprodi = Prodi::all(); // Select * FROM prodi 
         echo "ini adalah index";
     }
 

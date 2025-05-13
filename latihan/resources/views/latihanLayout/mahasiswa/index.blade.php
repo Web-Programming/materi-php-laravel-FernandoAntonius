@@ -55,6 +55,7 @@
                         <td>
                             <center>
                                 <a href="{{ url('mhs/' . $mahasiswa->id) }}" class="btn btn-info btn-sm">Detail</a>
+                                <a href="{{ url('mhs/' . $mahasiswa->id . '/edit')}}" class="btn btn-danger btn-sm">Edit</a>
                                 <button class="btn btn-danger btn-sm" onclick="return confirm('Hapus data ini?')">Hapus</button>
                             </center>
                         </td>

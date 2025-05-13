@@ -4,7 +4,12 @@
     <div class="container mt-4">
         <h3>Daftar Program Studi</h3>
 
-        <a href="#" class="btn btn-primary mb-3">+ Tambah Program Studi</a>
+        @if (session('status'))
+            <div class="alert alert-success">
+                {{ session('status')}}
+            </div>
+        @endif
+        <a href="{{url('prodi/create')}}" class="btn btn-primary mb-3">+ Tambah Program Studi</a>
 
         @php
             $prodiList = [
@@ -64,6 +69,7 @@
                         <td>
                             <center>
                                 <a href="{{ url('prodi/' . $prodi->id) }}" class="btn btn-info btn-sm">Detail</a>
+                                <a href="{{ url('prodi/' . $prodi->id . '/edit')}}" class="btn btn-warning btn-sm">Edit</a>
                                 <button class="btn btn-danger btn-sm" onclick="return confirm('Hapus data ini?')">Hapus</button>
                             </center>
                         </td>
