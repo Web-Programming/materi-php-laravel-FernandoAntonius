@@ -15,36 +15,43 @@
             $prodiList = [
                 (object) [
                     'id' => 1,
+                    'kode_prodi' => 'SI',
                     'nama' => 'Sistem Informasi',
                     'deskripsi' => 'Program Studi Sistem Informasi'
                 ],
                 (object) [
                     'id' => 2,
+                    'kode_prodi' => 'MN',
                     'nama' => 'Manajemen',
                     'deskripsi' => 'Program Studi Manajemen'
                 ],
                 (object) [
                     'id' => 3,
+                    'kode_prodi' => 'AK',
                     'nama' => 'Akuntasi',
                     'deskripsi' => 'Program Studi Akuntasi'
                 ],
                 (object) [
                     'id' => 4,
+                    'kode_prodi' => 'TE',
                     'nama' => 'Teknik Elektro',
                     'deskripsi' => 'Program Studi Teknik Elektro'
                 ],
                 (object) [
                     'id' => 5,
+                    'kode_prodi' => 'IT',
                     'nama' => 'Informatika',
                     'deskripsi' => 'Program Studi Informatika'
                 ],
                 (object) [
                     'id' => 6,
+                    'kode_prodi' => 'MI',
                     'nama' => 'Manajemen Informatika',
                     'deskripsi' => 'Program Studi Manajemen Informatika'
                 ],
                 (object) [
                     'id' => 7,
+                    'kode_prodi' => 'MS',
                     'nama' => 'Magister Sistem Informasi',
                     'deskripsi' => 'Program Studi Magister Sistem Informasi'
                 ],
@@ -64,13 +71,18 @@
                 @foreach ($prodiList as $index => $prodi)
                     <tr>
                         <td>{{ $index + 1 }}</td>
+                        <td>{{ $prodi->kode_prodi }}</td>
                         <td>{{ $prodi->nama }}</td>
-                        <td>{{ $prodi->deskripsi }}</td>
                         <td>
                             <center>
-                                <a href="{{ url('prodi/' . $prodi->id) }}" class="btn btn-info btn-sm">Detail</a>
-                                <a href="{{ url('prodi/' . $prodi->id . '/edit')}}" class="btn btn-warning btn-sm">Edit</a>
-                                <button class="btn btn-danger btn-sm" onclick="return confirm('Hapus data ini?')">Hapus</button>
+                                <form action="{{url('/prodi/' . $prodi->id)}}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <a href="{{ url('prodi/' . $prodi->id) }}" class="btn btn-info btn-sm">Detail</a>
+                                    <a href="{{ url('prodi/' . $prodi->id . '/edit')}}" class="btn btn-warning btn-sm">Edit</a>
+                                    <button class="btn btn-danger btn-sm" type="submit"
+                                        onclick="return confirm('Hapus data ini?')">Hapus</button>
+                                </form>
                             </center>
                         </td>
                     </tr>

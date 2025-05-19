@@ -5,6 +5,10 @@
         <h3>Detail Program Studi</h3>
         <table class="table table-bordered">
             <tr>
+                <th>Kode Program Studi</th>
+                <td>{{ $prodi->kode_prodi }}</td>
+            </tr>
+            <tr>
                 <th>Nama Program Studi</th>
                 <td>{{ $prodi->nama }}</td>
             </tr>
