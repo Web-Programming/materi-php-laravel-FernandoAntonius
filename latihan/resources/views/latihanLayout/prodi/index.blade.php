@@ -1,93 +1,117 @@
-@extends('latihanLayout.master')
+@extends('latihanlayout.master')
+
+@section('title', "Halaman List Prodi")
 
 @section('content')
-    <div class="container mt-4">
-        <h3>Daftar Program Studi</h3>
-
-        @if (session('status'))
-            <div class="alert alert-success">
-                {{ session('status')}}
+    <!--begin::App Content Header-->
+    <div class="app-content-header">
+        <!--begin::Container-->
+        <div class="container-fluid">
+            <!--begin::Row-->
+            <div class="row">
+                <div class="col-sm-6">
+                    <h3 class="mb-0">Program Studi</h3>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-end">
+                        <li class="breadcrumb-item"><a href="{{ url("/master") }}">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Program Studi</li>
+                    </ol>
+                </div>
             </div>
-        @endif
-        <a href="{{url('prodi/create')}}" class="btn btn-primary mb-3">+ Tambah Program Studi</a>
-
-        @php
-            $prodiList = [
-                (object) [
-                    'id' => 1,
-                    'kode_prodi' => 'SI',
-                    'nama' => 'Sistem Informasi',
-                    'deskripsi' => 'Program Studi Sistem Informasi'
-                ],
-                (object) [
-                    'id' => 2,
-                    'kode_prodi' => 'MN',
-                    'nama' => 'Manajemen',
-                    'deskripsi' => 'Program Studi Manajemen'
-                ],
-                (object) [
-                    'id' => 3,
-                    'kode_prodi' => 'AK',
-                    'nama' => 'Akuntasi',
-                    'deskripsi' => 'Program Studi Akuntasi'
-                ],
-                (object) [
-                    'id' => 4,
-                    'kode_prodi' => 'TE',
-                    'nama' => 'Teknik Elektro',
-                    'deskripsi' => 'Program Studi Teknik Elektro'
-                ],
-                (object) [
-                    'id' => 5,
-                    'kode_prodi' => 'IT',
-                    'nama' => 'Informatika',
-                    'deskripsi' => 'Program Studi Informatika'
-                ],
-                (object) [
-                    'id' => 6,
-                    'kode_prodi' => 'MI',
-                    'nama' => 'Manajemen Informatika',
-                    'deskripsi' => 'Program Studi Manajemen Informatika'
-                ],
-                (object) [
-                    'id' => 7,
-                    'kode_prodi' => 'MS',
-                    'nama' => 'Magister Sistem Informasi',
-                    'deskripsi' => 'Program Studi Magister Sistem Informasi'
-                ],
-            ];
-        @endphp
-
-        <table class="table table-bordered table-striped">
-            <thead class="thead-dark">
-                <tr>
-                    <th>No</th>
-                    <th>Nama Program Studi</th>
-                    <th>Deskripsi</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($prodiList as $index => $prodi)
-                    <tr>
-                        <td>{{ $index + 1 }}</td>
-                        <td>{{ $prodi->kode_prodi }}</td>
-                        <td>{{ $prodi->nama }}</td>
-                        <td>
-                            <center>
-                                <form action="{{url('/prodi/' . $prodi->id)}}" method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                    <a href="{{ url('prodi/' . $prodi->id) }}" class="btn btn-info btn-sm">Detail</a>
-                                    <a href="{{ url('prodi/' . $prodi->id . '/edit')}}" class="btn btn-warning btn-sm">Edit</a>
-                                    <button class="btn btn-danger btn-sm" type="submit"
-                                        onclick="return confirm('Hapus data ini?')">Hapus</button>
-                                </form>
-                            </center>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+            <!--end::Row-->
+        </div>
+        <!--end::Container-->
     </div>
+    <!--end::App Content Header-->
+    <!--begin::App Content-->
+    <div class="app-content">
+        <!--begin::Container-->
+        <div class="container-fluid">
+            <!--begin::Row-->
+            <div class="row">
+                <div class="col-12">
+                    <!-- Default box -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Program Studi</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-lte-toggle="card-collapse" title="Collapse">
+                                    <i data-lte-icon="expand" class="bi bi-plus-lg"></i>
+                                    <i data-lte-icon="collapse" class="bi bi-dash-lg"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-lte-toggle="card-remove" title="Remove">
+                                    <i class="bi bi-x-lg"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <!-- Menampilkaan pesan insert sukses -->
+                            @if (session("status"))
+                                <div class="alert alert-success">
+                                    {{ session("status")}}
+                                </div>
+                            @endif
+
+                            @if (session("failed"))
+                                <div class="alert alert-danger">
+                                    {{ session("failed")}}
+                                </div>
+                            @endif
+
+                            <a href="{{url("/prodi/create")}}" class="btn btn-small btn-success">
+                                Buat Prodi Baru
+                            </a>
+                            <table class="table table-bordered mt-2">
+                                <tr>
+                                    <th>No</th>
+                                    <th>Faklutas</th>
+                                    <th>Kode</th>
+                                    <th>Nama</th>
+                                    <th>Aksi</th>
+                                </tr>
+                                @foreach ($listprodi as $prodi)
+                                    <tr>
+                                        <td>{{$loop->iteration}}</td>
+                                        <td>
+                                            @if ($prodi->fakultas)
+                                                {{$prodi->fakultas->nama}}
+                                            @else
+                                                -
+                                            @endif
+                                        </td>
+                                        <td>{{$prodi->kode_prodi}}</td>
+                                        <td>{{$prodi->nama}}</td>
+                                        <td>
+                                            <form action="{{ url("/prodi/" . $prodi->id) }}" method="post">
+                                                @csrf
+                                                @method("DELETE")
+                                                <a href="{{url("/prodi/" . $prodi->id)}}" class="btn btn-small btn-default">
+                                                    Detail
+                                                </a>
+
+                                                <a href="{{url("/prodi/" . $prodi->id . "/edit")}}"
+                                                    class="btn btn-small btn-warning">
+                                                    Edit
+                                                </a>
+                                                <button type="submit" class="btn btn-small btn-danger">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </table>
+
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">Footer</div>
+                        <!-- /.card-footer-->
+                    </div>
+                    <!-- /.card -->
+                </div>
+            </div>
+            <!--end::Row-->
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::App Content-->
 @endsection

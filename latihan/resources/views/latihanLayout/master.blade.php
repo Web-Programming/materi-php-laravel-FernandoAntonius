@@ -139,7 +139,13 @@
   <div class="sidebar d-flex flex-column">
     <nav class=" mt-10 flex-grow-1">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
-        <li class="nav-item has-treeview">
+        <li class="nav-item">
+          <a href="{{route('fakultas.index')}}" class="nav-link">
+            <i class="bi bi-briefcase-fill"></i>
+            <p>Fakultas</p>
+          </a>
+        </li>
+        <!-- #region <li class="nav-item has-treeview">
           <a href="{{ route('fakultas.index') }}" class="nav-link fakultas-link">
             <i class="bi bi-briefcase-fill"></i>
             <p>
@@ -161,7 +167,7 @@
               </a>
             </li>
           </ul>
-        </li>
+        </li> -->
 
         <li class="nav-item">
           <a href="{{route('dosen.index')}}" class="nav-link">
@@ -178,6 +184,13 @@
         </li>
 
         <li class="nav-item">
+          <a href="{{route('prodi.index')}}" class="nav-link">
+            <i class="bi bi-clipboard-fill"></i>
+            <p>Program Studi</p>
+          </a>
+        </li>
+
+        <!-- #region <li class="nav-item">
           <a href="{{route('prodi.index')}}" class="nav-link">
             <i class="bi bi-clipboard-fill"></i>
             <p>Program Studi</p>
@@ -227,7 +240,7 @@
               </a>
             </li>
           </ul>
-        </li>
+        </li> -->
 
         <li class="nav-item">
           <a href="{{ route('materi.index') }}" class="nav-link">
