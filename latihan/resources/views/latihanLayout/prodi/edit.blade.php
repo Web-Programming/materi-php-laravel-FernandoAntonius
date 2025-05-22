@@ -1,4 +1,4 @@
-@extends('layout.master')
+@extends('latihanlayout.master')
 
 @section('title', "Halaman Edit Prodi")
 

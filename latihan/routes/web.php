@@ -63,3 +63,4 @@ Route::get('/master', function(){
 Route::get('/master', function(){
     return view('latihanLayout.masterisi');
 });
+
