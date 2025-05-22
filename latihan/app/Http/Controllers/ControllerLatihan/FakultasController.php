@@ -33,9 +33,9 @@ class FakultasController extends Controller
     public function store(Request $request)
     {
          //Form Validation
-        $data = $request->validate([
-            'nama' => 'required|min:3|max:4'
-        ]);
+$data = $request->validate([
+    'nama' => 'required|min:3|max:50'
+]);
         Fakultas::insert([
             'nama' => $data['nama'],
         ]);

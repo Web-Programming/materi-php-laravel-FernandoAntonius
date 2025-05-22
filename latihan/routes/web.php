@@ -64,3 +64,11 @@ Route::get('/master', function(){
     return view('latihanLayout.masterisi');
 });
 
+Route::get('/login', function(){
+    return view('latihanLayout.login');
+});
+
+Route::get('/register', function(){
+    return view('latihanLayout.register');
+});
+

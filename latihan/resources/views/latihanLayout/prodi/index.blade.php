@@ -1,4 +1,4 @@
-@extends('latihanlayout.master')
+@extends('latihanLayout.master')
 
 @section('title', "Halaman List Prodi")
 

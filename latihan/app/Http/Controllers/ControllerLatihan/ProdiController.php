@@ -69,7 +69,7 @@ class ProdiController extends Controller
         // $newprodi->save();
 
         //arahkan/pindahkan ke halaman tujuan
-        return redirect("latihanLayout.prodi")->with("status", "Program Studi berhasil disimpan!");
+return redirect()->route('prodi.index')->with("status", "Program Studi berhasil disimpan!");
     }
 
     /**
