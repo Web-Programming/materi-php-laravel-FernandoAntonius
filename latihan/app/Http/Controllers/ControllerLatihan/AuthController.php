@@ -2,75 +2,77 @@
 
 namespace App\Http\Controllers\ControllerLatihan;
 
-use App\Http\Controllers\Controller;
-use Hash;
-use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rules\Email;
-use Validator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\Controller;
 
 class AuthController extends Controller
 {
-    //
-}
+    function login(){
+        $user = Auth::user();
 
-function login() {
-    return view('latihanLayout.login');
-
-    // Jika user sudah login
-    if($user) {
-        // Cek level
-        if ($user->level == 'admin') {
-            return redirect()->intended('admin');
-        } 
-    }
-}
-
-function do_login(Request $request) {
-    $request->validate([
-        'email'=>'required|email',
-        'password'=>'required|min:8'
-    ]);
-    // Menyiapkan variabel cridentials
-    $credentials = $request->only('email', 'password');    
-    // Cek cridentials ke tabel user menggunakan Auth
-    if (Auth::attempt($credentials)) {
-        // Jika berhasil login
-        // Cek level user
-        $user = Auth::login();
-        if ($user->level == 'admin') {
-            return redirect()->intended('admin');
-        } else if ($user->level == 'user') {
-            return redirect()->intended('user');
+        //jik user sudah login
+        if($user){
+            //cek level
+            if($user->level == 'admin'){
+                return redirect()->intended('admin');
+            }else if($user->level == 'user'){
+                return redirect()->intended('user');
+            }
         }
-        return redirect()->intended('/');
 
-        // Jika gagal login
+        return view("latihanLayout.login");
+    }
+
+    function do_login(Request $request){
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:8'
+        ]);
+        //menyiapkan variabel cridentials
+        $credentials = $request->only('email', 'password');
+
+        //cek cridentials ke tabel users meggunakan Auth
+        if(Auth::attempt($credentials)){
+            //jika berhasil login
+            //cek level user
+            $user = Auth::user();
+            if($user->level == 'admin'){
+                return redirect()->intended('admin');
+            }else if($user->level == 'user'){
+                return redirect()->intended('user');
+            }
+            return redirect()->intended('/');
+        }
+
+        //jika login gagal
         return redirect('login')
             ->withErrors([
-                'failed' => 'User tidak terdaftar atau password tidak mencocoki'
+                'failed' => 'User tidak ditemukan atau password yang anda masukkan salah'
             ])
             ->withInput();
     }
-}
 
-function register() {
-    return view('latihanLayout.register');
-}
+    function register(){
+        return view("latihanLayout.register");
+    }
 
-function do_register(Request $request) {
-    $validator = Validator::make(
-        $request->all(),
-        [
-            'name' => 'required',
-            'email' => 'reqiuired|email|unique:users',
-            'password' => 'required|min:8'
-        ]
+    function do_register(Request $request){
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required',
+                'email' => 'required|email|unique:users',
+                'password' => 'required|min:8'
+            ]
         );
-        if ($validator->fails()) {
+        if($validator->fails()){
             return redirect("register")
             ->withErrors($validator)
-            ->withInput();
+            ->withInput();    
         }
 
         $user = new User();
@@ -81,4 +83,11 @@ function do_register(Request $request) {
         $user->save();
 
         return redirect('login');
+    }
+
+    function logout(){
+        Auth::logout();
+        return redirect('login');
+    }
+
 }

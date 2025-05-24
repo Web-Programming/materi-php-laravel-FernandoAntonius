@@ -1,14 +1,15 @@
 <?php
 
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ControllerLatihan\AuthController;
 use App\Http\Controllers\ControllerLatihan\MateriController;
 use App\Http\Controllers\ControllerLatihan\MahasiswaController;
 use App\Http\Controllers\ControllerLatihan\ProdiController;
 use App\Http\Controllers\ControllerLatihan\DosenController;
 use App\Http\Controllers\ControllerLatihan\FakultasController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\ControllerLatihan\UserController;
+use App\Http\Controllers\ControllerLatihan\AdminController;
 use GuzzleHttp\Middleware;
+use App\Http\Middleware\CekLogin;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Routing\RouteAction;
 
@@ -69,10 +70,20 @@ Route::get('/master', function(){
     return view('latihanLayout.masterisi');
 });
 
-Route::get('/login', AuthController::class, 'login');
-Route::get('/login', AuthController::class, 'do_login');
-Route::get('/register', AuthController::class, 'register');
-Route::get('/register', AuthController::class, 'do_register');
+Route::get("/login", [AuthController::class, 'login'])->name('login');
+Route::post("/login", [AuthController::class, 'do_login']);
+Route::get("/register", [AuthController::class, 'register']);
+Route::post("/register", [AuthController::class, 'do_register']);
+Route::get("/logout", [AuthController::class, 'logout']);
 
-Route::get('/admin', [UserController::class, 'index']-middleware(['auth', CekLogin::class. ":admin"]));
-Route::get('/user', [AdminController::class, 'index']-middleware(['auth', CekLogin::class. ":user"]));
+Route::group(['middleware' => ['auth']], function(){
+    Route::group(['middleware' => [CekLogin::class.':admin']], function(){
+        Route::get("/admin", [AdminController::class, 'index']);
+        Route::resource('prodi', ProdiController::class);
+        Route::resource('fakultas', FakultasController::class);
+    });
+
+    Route::group(['middleware' => [CekLogin::class.':user']], function(){
+        Route::get("/user", [UserController::class, 'index']);
+    });
+});

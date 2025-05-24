@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Fakultas;
 use App\Models\Prodi;
 use Illuminate\Http\Request;
+use DB;
 use Symfony\Contracts\Service\Attribute\Required;
 
 class ProdiController extends Controller
