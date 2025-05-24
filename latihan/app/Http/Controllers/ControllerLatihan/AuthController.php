@@ -4,6 +4,7 @@ namespace App\Http\Controllers\ControllerLatihan;
 
 use App\Http\Controllers\Controller;
 use Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Email;
 use Validator;
@@ -15,10 +16,42 @@ class AuthController extends Controller
 
 function login() {
     return view('latihanLayout.login');
+
+    // Jika user sudah login
+    if($user) {
+        // Cek level
+        if ($user->level == 'admin') {
+            return redirect()->intended('admin');
+        } 
+    }
 }
 
-function do_login() {
+function do_login(Request $request) {
+    $request->validate([
+        'email'=>'required|email',
+        'password'=>'required|min:8'
+    ]);
+    // Menyiapkan variabel cridentials
+    $credentials = $request->only('email', 'password');    
+    // Cek cridentials ke tabel user menggunakan Auth
+    if (Auth::attempt($credentials)) {
+        // Jika berhasil login
+        // Cek level user
+        $user = Auth::login();
+        if ($user->level == 'admin') {
+            return redirect()->intended('admin');
+        } else if ($user->level == 'user') {
+            return redirect()->intended('user');
+        }
+        return redirect()->intended('/');
 
+        // Jika gagal login
+        return redirect('login')
+            ->withErrors([
+                'failed' => 'User tidak terdaftar atau password tidak mencocoki'
+            ])
+            ->withInput();
+    }
 }
 
 function register() {

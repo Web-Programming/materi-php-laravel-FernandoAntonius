@@ -1,11 +1,16 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ControllerLatihan\AuthController;
 use App\Http\Controllers\ControllerLatihan\MateriController;
 use App\Http\Controllers\ControllerLatihan\MahasiswaController;
 use App\Http\Controllers\ControllerLatihan\ProdiController;
 use App\Http\Controllers\ControllerLatihan\DosenController;
 use App\Http\Controllers\ControllerLatihan\FakultasController;
+use App\Http\Controllers\UserController;
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Routing\RouteAction;
 
 Route::get('/', function () {
     return view('welcome');
@@ -64,11 +69,10 @@ Route::get('/master', function(){
     return view('latihanLayout.masterisi');
 });
 
-Route::get('/login', function(){
-    return view('latihanLayout.login');
-});
+Route::get('/login', AuthController::class, 'login');
+Route::get('/login', AuthController::class, 'do_login');
+Route::get('/register', AuthController::class, 'register');
+Route::get('/register', AuthController::class, 'do_register');
 
-Route::get('/register', function(){
-    return view('latihanLayout.register');
-});
-
+Route::get('/admin', [UserController::class, 'index']-middleware(['auth', CekLogin::class. ":admin"]));
+Route::get('/user', [AdminController::class, 'index']-middleware(['auth', CekLogin::class. ":user"]));
