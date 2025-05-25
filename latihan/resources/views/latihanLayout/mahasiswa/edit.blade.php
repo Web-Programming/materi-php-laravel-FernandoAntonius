@@ -48,7 +48,7 @@
                         </div>
                         <div class="card-body">
 
-                            <form action="{{ url('/mahasiswa/' . $mahasiswa->id) }}" method="post">
+                            <form action="{{ url('/mhs/' . $mahasiswa->id) }}" method="post">
                                 @method('PUT')
                                 @csrf
                                 <div class="">

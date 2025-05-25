@@ -15,7 +15,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-end">
                         <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ url('/mahasiswa') }}">Mahasiswa</a></li>
+                        <li class="breadcrumb-item"><a href="{{ url('/mhs') }}">Mahasiswa</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Detail Mahasiswa</li>
                     </ol>
                 </div>
