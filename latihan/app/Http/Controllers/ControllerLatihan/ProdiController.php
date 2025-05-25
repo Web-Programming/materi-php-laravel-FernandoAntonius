@@ -52,7 +52,7 @@ class ProdiController extends Controller
         //response object dari created data
         Prodi::create([
             'kode_prodi' => $data['kode_prodi'],
-            'nama'          => $data['nama'],
+            'nama' => $data['nama'],
             'fakultas_id' => $data['fakultas_id']
         ]);
         
@@ -80,7 +80,7 @@ return redirect()->route('prodi.index')->with("status", "Program Studi berhasil 
     {
         $prodi = Prodi::find($id);
         if(!isset($prodi->id)){
-            return redirect("latihanLayout.prodi")->with("failed", "Program Studi tidak ditemukan!");
+            return redirect("prodi")->with("failed", "Program Studi tidak ditemukan!");
         }
         return view("latihanLayout.prodi.detail", [
             'prodi' => $prodi
@@ -95,7 +95,7 @@ return redirect()->route('prodi.index')->with("status", "Program Studi berhasil 
         //Ambil data berdasarkan id
         $prodi = Prodi::find($id); 
         if(!isset($prodi->id)){
-            return redirect("latihanLayout.prodi")->with("failed", "Program Studi tidak ditemukan!");
+            return redirect("prodi")->with("failed", "Program Studi tidak ditemukan!");
         }
 
         //select * from prodis where id = $id
@@ -121,7 +121,7 @@ return redirect()->route('prodi.index')->with("status", "Program Studi berhasil 
         $prodi->nama = $data['nama'];
         $prodi->save();
 
-        return redirect("latihanLayout.prodi")
+        return redirect("prodi")
             ->with("status", "Program Studi berhasil diupdate!");
     }
 
@@ -134,7 +134,7 @@ return redirect()->route('prodi.index')->with("status", "Program Studi berhasil 
 
         if(isset($prodi->id)){
             $prodi->delete();
-            return redirect("latihanLayout.prodi")->with("status", "Program Studi berhasil dihapus!");
+            return redirect("prodi")->with("status", "Program Studi berhasil dihapus!");
         }
 
         return redirect("latihanLayout.prodi")->with("failed", "Program Studi gagal dihapus!");

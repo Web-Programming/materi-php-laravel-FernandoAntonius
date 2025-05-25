@@ -1,61 +1,109 @@
 @extends('latihanLayout.master')
 
+@section('title', "Halaman List Dosen")
+
 @section('content')
-    <div class="container mt-4">
-        <h3>Daftar Dosen</h3>
-
-        <a href="#" class="btn btn-primary mb-3">+ Tambah Dosen</a>
-
-        @php
-            $dosenList = [
-                (object) [
-                    'id' => 1,
-                    'nama' => 'Sir Mister',
-                    'program' => 'Sistem Informasi',
-                    'status' => 'Tetap'
-                ],
-                (object) [
-                    'id' => 2,
-                    'nama' => 'Davis',
-                    'program' => 'Informatika',
-                    'status' => 'Kontrak'
-                ],
-            ];
-        @endphp
-
-        <table class="table table-bordered table-striped">
-            <thead class="thead-dark">
-                <tr>
-                    <th>No</th>
-                    <th>Nama</th>
-                    <th>Program Studi</th>
-                    <th>Status</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($dosenList as $index => $dosen)
-                    <tr>
-                        <td>{{ $index + 1 }}</td>
-                        <td>{{ $dosen->nama }}</td>
-                        <td>{{ $dosen->program }}</td>
-                        <td>
-                            @if ($dosen->status == 'Tetap')
-                                <span class="badge badge-success">{{ $dosen->status }}</span>
-                            @else
-                                <span class="badge badge-danger">{{ $dosen->status }}</span>
-                            @endif
-                        </td>
-                        <td>
-                            <center>
-                                <a href="{{ url('dosen/' . $dosen->id) }}" class="btn btn-info btn-sm">Detail</a>
-                                <a href="{{ url('dosen/' . $dosen->id . '/edit')}}" class="btn btn-warning btn-sm">Edit</a>
-                                <button class="btn btn-danger btn-sm" onclick="return confirm('Hapus data ini?')">Hapus</button>
-                            </center>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+    <!--begin::App Content Header-->
+    <div class="app-content-header">
+        <!--begin::Container-->
+        <div class="container-fluid">
+            <!--begin::Row-->
+            <div class="row">
+                <div class="col-sm-6">
+                    <h3 class="mb-0">Dosen</h3>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-end">
+                        <li class="breadcrumb-item"><a href="{{ url('/master') }}">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Dosen</li>
+                    </ol>
+                </div>
+            </div>
+            <!--end::Row-->
+        </div>
+        <!--end::Container-->
     </div>
+    <!--end::App Content Header-->
+    <!--begin::App Content-->
+    <div class="app-content">
+        <!--begin::Container-->
+        <div class="container-fluid">
+            <!--begin::Row-->
+            <div class="row">
+                <div class="col-12">
+                    <!-- Default box -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Dosen</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-lte-toggle="card-collapse" title="Collapse">
+                                    <i data-lte-icon="expand" class="bi bi-plus-lg"></i>
+                                    <i data-lte-icon="collapse" class="bi bi-dash-lg"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-lte-toggle="card-remove" title="Remove">
+                                    <i class="bi bi-x-lg"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            @if (session('status'))
+                                <div class="alert alert-success">
+                                    {{ session('status') }}
+                                </div>
+                            @endif
+
+                            @if (session('failed'))
+                                <div class="alert alert-danger">
+                                    {{ session('failed') }}
+                                </div>
+                            @endif
+
+                            <a href="{{ url('/dosen/create') }}" class="btn btn-small btn-success">
+                                Buat Dosen Baru
+                            </a>
+                            <table class="table table-bordered mt-2">
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama</th>
+                                    <th>Program Studi</th>
+                                    <th>Status Kerja</th>
+                                    <th>Aksi</th>
+                                </tr>
+                                @foreach ($listdosen as $dosen)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $dosen->nama }}</td>
+                                        <td>{{ $dosen->prodi->nama ?? '-' }}</td>
+                                        <td>{{ $dosen->status_kerja }}</td>
+                                        <td>
+                                            <form action="{{ url('/dosen/' . $dosen->id) }}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <a href="{{ url('/dosen/' . $dosen->id) }}" class="btn btn-small btn-default">
+                                                    Detail
+                                                </a>
+
+                                                <a href="{{ url('/dosen/' . $dosen->id . '/edit') }}" class="btn btn-small btn-warning">
+                                                    Edit
+                                                </a>
+                                                <button type="submit" class="btn btn-small btn-danger">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </table>
+
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">Footer</div>
+                        <!-- /.card-footer-->
+                    </div>
+                    <!-- /.card -->
+                </div>
+            </div>
+            <!--end::Row-->
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::App Content-->
 @endsection

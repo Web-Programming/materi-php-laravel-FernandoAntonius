@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\ControllerLatihan;
 
 use App\Http\Controllers\Controller;
+use App\Models\Dosen;
+use App\Models\Prodi;
 use Illuminate\Http\Request;
 
 class DosenController extends Controller
@@ -12,7 +14,8 @@ class DosenController extends Controller
      */
     public function index()
     {
-        return(view('latihanLayout.dosen.index'));
+        $listdosen = Dosen::all();
+        return view('latihanLayout.dosen.index', ['listdosen' => $listdosen]);
     }
 
     /**
@@ -20,7 +23,8 @@ class DosenController extends Controller
      */
     public function create()
     {
-        //
+        $prodi = Prodi::all();
+        return view('latihanLayout.dosen.create', ['prodi' => $prodi]);
     }
 
     /**
@@ -28,7 +32,15 @@ class DosenController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'nama' => 'required|min:5|max:50',
+            'prodi_id' => 'required',
+            'status_kerja' => 'required',
+            'tanggal_lahir' => 'required|date',
+            'tempat_lahir' => 'required|min:3|max:50',
+        ]);
+        Dosen::create($data);
+        return redirect()->route('dosen.index')->with('status', 'Dosen berhasil disimpan!');
     }
 
     /**
@@ -36,24 +48,10 @@ class DosenController extends Controller
      */
     public function show(string $id)
     {
-        $dosenList = [
-            1 => (object)[
-                'nama' => 'Sir Mister',
-                'program' => 'Sistem Informasi',
-                'status' => 'Tetap',
-                'tanggal_lahir' => '01-01-1967',
-                'tempat_lahir' => 'Inggris'
-            ],
-            2 => (object)[
-                'nama' => 'Davis',
-                'program' => 'Informatika',
-                'status' => 'Kontrak',
-                'tanggal_lahir' => '17-08-1945',
-                'tempat_lahir' => 'Palembang'
-            ],
-        ];
-
-        $dosen = $dosenList[$id];
+        $dosen = Dosen::find($id);
+        if (!isset($dosen->id)) {
+            return redirect()->route('dosen.index')->with('failed', 'Dosen tidak ditemukan!');
+        }
         return view('latihanLayout.dosen.detail', compact('dosen'));
     }
 
@@ -62,7 +60,12 @@ class DosenController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $dosen = Dosen::find($id);
+        if (!isset($dosen->id)) {
+            return redirect()->route('dosen.index')->with('failed', 'Dosen tidak ditemukan!');
+        }
+        $prodi = Prodi::all();
+        return view('latihanLayout.dosen.edit', compact('dosen', 'prodi'));
     }
 
     /**
@@ -70,7 +73,16 @@ class DosenController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = $request->validate([
+            'nama' => 'required|min:5|max:50',
+            'prodi_id' => 'required',
+            'status_kerja' => 'required',
+            'tanggal_lahir' => 'required|date',
+            'tempat_lahir' => 'required|min:3|max:50',
+        ]);
+        $dosen = Dosen::find($id);
+        $dosen->update($data);
+        return redirect()->route('dosen.index')->with('status', 'Dosen berhasil diupdate!');
     }
 
     /**
@@ -78,6 +90,11 @@ class DosenController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $dosen = Dosen::find($id);
+        if (isset($dosen->id)) {
+            $dosen->delete();
+            return redirect()->route('dosen.index')->with('status', 'Dosen berhasil dihapus!');
+        }
+        return redirect()->route('dosen.index')->with('failed', 'Dosen gagal dihapus!');
     }
 }

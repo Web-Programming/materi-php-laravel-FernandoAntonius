@@ -80,10 +80,25 @@ Route::group(['middleware' => ['auth']], function(){
     Route::group(['middleware' => [CekLogin::class.':admin']], function(){
         Route::get("/admin", [AdminController::class, 'index']);
         Route::resource('prodi', ProdiController::class);
+        Route::resource('materi', MateriController::class);
+        Route::resource('dosen', DosenController::class);
+        Route::resource('mhs', MahasiswaController::class);
         Route::resource('fakultas', FakultasController::class);
     });
 
     Route::group(['middleware' => [CekLogin::class.':user']], function(){
         Route::get("/user", [UserController::class, 'index']);
     });
+
+    /*
+    Route::group(['middleware' => [CekLogin::class.':dosen']], function(){
+        Route::get("/master", [UserController::class, 'index']);
+        Route::resource('materi', MateriController::class);
+        Route::resource('mhs', MahasiswaController::class);
+    });
+
+    Route::group(['middleware' => [CekLogin::class.':mahasiswa']], function(){
+        Route::get("/master", [UserController::class, 'index']);
+        Route::resource('materi', MateriController::class);
+    }); */
 });

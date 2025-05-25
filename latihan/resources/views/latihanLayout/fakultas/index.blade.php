@@ -65,7 +65,7 @@
                             <table class="table table-bordered mt-2">
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama</th>
+                                    <th>Fakultas</th>
                                     <th>Aksi</th>
                                 </tr>
                                 @foreach ($listfakultas as $fakultas)
@@ -91,6 +91,7 @@
                                     </tr>
                                 @endforeach
                             </table>
+
 
                         </div>
                         <!-- /.card-body -->

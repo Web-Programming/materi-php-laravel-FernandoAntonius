@@ -19,8 +19,12 @@ class AuthController extends Controller
             //cek level
             if($user->level == 'admin'){
                 return redirect()->intended('admin');
-            }else if($user->level == 'user'){
+            } else if($user->level == 'user'){
                 return redirect()->intended('user');
+            } else if($user->level == 'dosen'){
+                return redirect()->intended('dosen');
+            } else if($user->level == 'mahasiswa'){
+                return redirect()->intended('mahasiswa');
             }
         }
 
@@ -42,8 +46,12 @@ class AuthController extends Controller
             $user = Auth::user();
             if($user->level == 'admin'){
                 return redirect()->intended('admin');
-            }else if($user->level == 'user'){
+            } else if($user->level == 'user'){
                 return redirect()->intended('user');
+            } else if($user->level == 'dosen'){
+                return redirect()->intended('dosen');
+            } else if($user->level == 'mahasiswa'){
+                return redirect()->intended('mahasiswa');
             }
             return redirect()->intended('/');
         }
@@ -66,7 +74,8 @@ class AuthController extends Controller
             [
                 'name' => 'required',
                 'email' => 'required|email|unique:users',
-                'password' => 'required|min:8'
+                'password' => 'required|min:8',
+                'level' => 'required|in:user,admin,dosen,mahasiswa'
             ]
         );
         if($validator->fails()){
@@ -79,7 +88,7 @@ class AuthController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
-        $user->level = 'user';
+        $user->level = $request->level;
         $user->save();
 
         return redirect('login');

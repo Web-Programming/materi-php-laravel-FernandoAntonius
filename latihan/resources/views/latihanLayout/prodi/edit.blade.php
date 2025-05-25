@@ -1,4 +1,4 @@
-@extends('latihanlayout.master')
+@extends('latihanLayout.master')
 
 @section('title', "Halaman Edit Prodi")
 
@@ -52,13 +52,13 @@
                                 @method("PUT")
                                 @csrf
                                 <!-- <div class="">
-                                <label class="">Kode Prodi</label>
-                                <input class="form-control" type="text" name="kode_prodi" 
-                                  value="{{ old("kode_prodi", $prodi->kode_prodi) }}">
-                                @error("kode_prodi")
-                                  <p class="text-danger"> {{ $message }} </p>
-                                @enderror
-                              </div>    -->
+                                    <label class="">Kode Prodi</label>
+                                    <input class="form-control" type="text" name="kode_prodi" 
+                                      value="{{ old("kode_prodi", $prodi->kode_prodi) }}">
+                                    @error("kode_prodi")
+                                      <p class="text-danger"> {{ $message }} </p>
+                                    @enderror
+                                  </div>    -->
                                 <div class="">
                                     <label class="">Nama Prodi</label>
                                     <input class="form-control" type="text" name="nama"

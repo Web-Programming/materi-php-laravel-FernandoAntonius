@@ -14,7 +14,7 @@ class FakultasController extends Controller
     public function index()
     {
         $listfakultas = Fakultas::all(); //select * from fakultas;
-        return view("fakultas.index", 
+        return view("latihanLayout.fakultas.index", 
             ['listfakultas' => $listfakultas]
         );
     }
@@ -24,7 +24,10 @@ class FakultasController extends Controller
      */
     public function create()
     {
-        return view("fakultas.create");
+        $fakultas = Fakultas::all();
+        return view("latihanLayout.fakultas.create", [
+            'fakultas' => $fakultas
+        ]);
     }
 
     /**
@@ -33,13 +36,13 @@ class FakultasController extends Controller
     public function store(Request $request)
     {
          //Form Validation
-$data = $request->validate([
-    'nama' => 'required|min:3|max:50'
-]);
-        Fakultas::insert([
+        $data = $request->validate([
+            'nama' => 'required|min:5|max:50'
+        ]);
+        Fakultas::create([
             'nama' => $data['nama'],
         ]);
-        return redirect("fakultas")->with("status", "Fakultas berhasil disimpan!");
+        return redirect()->route('fakultas.index')->with("status", "Fakultas berhasil disimpan!");
     }
 
     /**
@@ -47,7 +50,11 @@ $data = $request->validate([
      */
     public function show(string $id)
     {
-        //
+        $fakultas = Fakultas::find($id);
+        if(!isset($fakultas->id)){
+            return redirect()->route('fakultas.index')->with("failed", "Fakultas tidak ditemukan!");
+        }
+        return view('latihanLayout.fakultas.detail', compact('fakultas'));
     }
 
     /**
@@ -55,7 +62,11 @@ $data = $request->validate([
      */
     public function edit(string $id)
     {
-        //
+        $fakultas = Fakultas::find($id);
+        if(!isset($fakultas->id)){
+            return redirect()->route('fakultas.index')->with("failed", "Fakultas tidak ditemukan!");
+        }
+        return view('latihanLayout.fakultas.edit', compact('fakultas'));
     }
 
     /**
@@ -63,7 +74,14 @@ $data = $request->validate([
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = $request->validate([
+            'nama' => 'required|min:5|max:50'
+        ]);
+        $fakultas = Fakultas::find($id);
+        $fakultas->update([
+            'nama' => $data['nama'],
+        ]);
+        return redirect()->route('fakultas.index')->with('status', 'Fakultas berhasil diupdate!');
     }
 
     /**
@@ -71,6 +89,11 @@ $data = $request->validate([
      */
     public function destroy(string $id)
     {
-        //
+        $fakultas = Fakultas::find($id);
+        if(isset($fakultas->id)){
+            $fakultas->delete();
+            return redirect()->route('fakultas.index')->with('status', 'Fakultas berhasil dihapus!');
+        }
+        return redirect()->route('fakultas.index')->with('failed', 'Fakultas gagal dihapus!');
     }
 }

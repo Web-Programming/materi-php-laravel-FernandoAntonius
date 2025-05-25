@@ -1,59 +1,108 @@
 @extends('latihanLayout.master')
 
+@section('title', "Halaman List Materi")
+
 @section('content')
-    <div class="container mt-4">
-        <h3>Daftar Materi</h3>
-
-        <a href="#" class="btn btn-primary mb-3">+ Tambah Materi</a>
-
-        @php
-            $materiList = [
-                (object) [
-                    'id' => 1,
-                    'nama' => 'Pengenalan Laravel',
-                    'deskripsi' => 'Materi dasar tentang framework Laravel'
-                ],
-                (object) [
-                    'id' => 2,
-                    'nama' => 'Routing Laravel',
-                    'deskripsi' => 'Membahas penggunaan route dan controller'
-                ],
-                (object) [
-                    'id' => 3,
-                    'nama' => 'Template',
-                    'deskripsi' => 'Contoh Template'
-                ],
-            ];
-        @endphp
-
-        <table class="table table-bordered table-striped">
-            <table class="table table-bordered table-striped">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>No</th>
-                        <th>Nama Materi</th>
-                        <th>Deskripsi</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($materiList as $index => $materi)
-                        <tr>
-                            <td>{{ $index + 1 }}</td>
-                            <td>{{ $materi->nama }}</td>
-                            <td>{{ $materi->deskripsi }}</td>
-                            <td>
-                                <center>
-                                    <a href="{{ url('materi/' . $materi->id) }}" class="btn btn-info btn-sm">Detail</a>
-                                    <a href="{{ url('materi/' . $materi->id . '/edit')}}"
-                                        class="btn btn-warning btn-sm">Edit</a>
-                                    <button class="btn btn-danger btn-sm"
-                                        onclick="return confirm('Hapus data ini?')">Hapus</button>
-                                </center>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+    <!--begin::App Content Header-->
+    <div class="app-content-header">
+        <!--begin::Container-->
+        <div class="container-fluid">
+            <!--begin::Row-->
+            <div class="row">
+                <div class="col-sm-6">
+                    <h3 class="mb-0">Materi</h3>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-end">
+                        <li class="breadcrumb-item"><a href="{{ url('/master') }}">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Materi</li>
+                    </ol>
+                </div>
+            </div>
+            <!--end::Row-->
+        </div>
+        <!--end::Container-->
     </div>
+    <!--end::App Content Header-->
+    <!--begin::App Content-->
+    <div class="app-content">
+        <!--begin::Container-->
+        <div class="container-fluid">
+            <!--begin::Row-->
+            <div class="row">
+                <div class="col-12">
+                    <!-- Default box -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Materi</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-lte-toggle="card-collapse" title="Collapse">
+                                    <i data-lte-icon="expand" class="bi bi-plus-lg"></i>
+                                    <i data-lte-icon="collapse" class="bi bi-dash-lg"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-lte-toggle="card-remove" title="Remove">
+                                    <i class="bi bi-x-lg"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            @if (session('status'))
+                                <div class="alert alert-success">
+                                    {{ session('status') }}
+                                </div>
+                            @endif
+
+                            @if (session('failed'))
+                                <div class="alert alert-danger">
+                                    {{ session('failed') }}
+                                </div>
+                            @endif
+
+                            <a href="{{ url('/materi/create') }}" class="btn btn-small btn-success">
+                                Buat Materi Baru
+                            </a>
+                            <table class="table table-bordered mt-2">
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama</th>
+                                    <th>Deskripsi</th>
+                                    <th>Aksi</th>
+                                </tr>
+                                @foreach ($listmateri as $materi)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $materi->nama }}</td>
+                                        <td>{{ $materi->deskripsi }}</td>
+                                        <td>
+                                            <form action="{{ url('/materi/' . $materi->id) }}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <a href="{{ url('/materi/' . $materi->id) }}" class="btn btn-small btn-default">
+                                                    Detail
+                                                </a>
+
+                                                <a href="{{ url('/materi/' . $materi->id . '/edit') }}"
+                                                    class="btn btn-small btn-warning">
+                                                    Edit
+                                                </a>
+                                                <button type="submit" class="btn btn-small btn-danger">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </table>
+
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">Footer</div>
+                        <!-- /.card-footer-->
+                    </div>
+                    <!-- /.card -->
+                </div>
+            </div>
+            <!--end::Row-->
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::App Content-->
 @endsection

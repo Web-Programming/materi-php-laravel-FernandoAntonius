@@ -65,7 +65,7 @@
                             <table class="table table-bordered mt-2">
                                 <tr>
                                     <th>No</th>
-                                    <th>Faklutas</th>
+                                    <th>Fakultas</th>
                                     <th>Kode</th>
                                     <th>Nama</th>
                                     <th>Aksi</th>
