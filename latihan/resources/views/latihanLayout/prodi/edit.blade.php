@@ -14,7 +14,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-end">
-                        <li class="breadcrumb-item"><a href="{{ url("/") }}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ url("/user") }}">Home</a></li>
                         <li class="breadcrumb-item"><a href="{{ url("/prodi") }}">Program Studi</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Edit Program Studi</li>
                     </ol>
@@ -52,13 +52,13 @@
                                 @method("PUT")
                                 @csrf
                                 <!-- <div class="">
-                                    <label class="">Kode Prodi</label>
-                                    <input class="form-control" type="text" name="kode_prodi" 
-                                      value="{{ old("kode_prodi", $prodi->kode_prodi) }}">
-                                    @error("kode_prodi")
-                                      <p class="text-danger"> {{ $message }} </p>
-                                    @enderror
-                                  </div>    -->
+                                        <label class="">Kode Prodi</label>
+                                        <input class="form-control" type="text" name="kode_prodi" 
+                                          value="{{ old("kode_prodi", $prodi->kode_prodi) }}">
+                                        @error("kode_prodi")
+                                          <p class="text-danger"> {{ $message }} </p>
+                                        @enderror
+                                      </div>    -->
                                 <div class="">
                                     <label class="">Nama Prodi</label>
                                     <input class="form-control" type="text" name="nama"

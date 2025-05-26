@@ -22,9 +22,9 @@ class AuthController extends Controller
             } else if($user->level == 'user'){
                 return redirect()->intended('user');
             } else if($user->level == 'dosen'){
-                return redirect()->intended('dosen');
+                return redirect()->intended('userdosen');
             } else if($user->level == 'mahasiswa'){
-                return redirect()->intended('mahasiswa');
+                return redirect()->intended('usermahasiswa');
             }
         }
 
@@ -49,9 +49,9 @@ class AuthController extends Controller
             } else if($user->level == 'user'){
                 return redirect()->intended('user');
             } else if($user->level == 'dosen'){
-                return redirect()->intended('dosen');
+                return redirect()->intended('userdosen');
             } else if($user->level == 'mahasiswa'){
-                return redirect()->intended('mahasiswa');
+                return redirect()->intended('usermahasiswa');
             }
             return redirect()->intended('/');
         }
@@ -94,8 +94,10 @@ class AuthController extends Controller
         return redirect('login');
     }
 
-    function logout(){
+    function logout() {
         Auth::logout();
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
         return redirect('login');
     }
 

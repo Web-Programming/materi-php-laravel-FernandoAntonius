@@ -8,6 +8,8 @@ use App\Http\Controllers\ControllerLatihan\DosenController;
 use App\Http\Controllers\ControllerLatihan\FakultasController;
 use App\Http\Controllers\ControllerLatihan\UserController;
 use App\Http\Controllers\ControllerLatihan\AdminController;
+use App\Http\Controllers\ControllerLatihan\UserDosenController;
+use App\Http\Controllers\ControllerLatihan\UserMahasiswaController;
 use GuzzleHttp\Middleware;
 use App\Http\Middleware\CekLogin;
 use Illuminate\Support\Facades\Route;
@@ -89,16 +91,17 @@ Route::group(['middleware' => ['auth']], function(){
     Route::group(['middleware' => [CekLogin::class.':user']], function(){
         Route::get("/user", [UserController::class, 'index']);
     });
-
-    /*
+    
     Route::group(['middleware' => [CekLogin::class.':dosen']], function(){
-        Route::get("/master", [UserController::class, 'index']);
+        Route::get("/userdosen", [UserDosenController::class, 'index']);
+        /*
         Route::resource('materi', MateriController::class);
-        Route::resource('mhs', MahasiswaController::class);
+        Route::resource('mhs', MahasiswaController::class); */
     });
 
     Route::group(['middleware' => [CekLogin::class.':mahasiswa']], function(){
-        Route::get("/master", [UserController::class, 'index']);
-        Route::resource('materi', MateriController::class);
-    }); */
-});
+        Route::get("/usermahasiswa", [UserMahasiswaController::class, 'index']);
+        /*
+        Route::resource('materi', MateriController::class); */
+    });
+}); 

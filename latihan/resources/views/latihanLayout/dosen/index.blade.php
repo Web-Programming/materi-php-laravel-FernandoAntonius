@@ -14,7 +14,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-end">
-                        <li class="breadcrumb-item"><a href="{{ url('/master') }}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ url('/user') }}">Home</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Dosen</li>
                     </ol>
                 </div>
@@ -83,7 +83,8 @@
                                                     Detail
                                                 </a>
 
-                                                <a href="{{ url('/dosen/' . $dosen->id . '/edit') }}" class="btn btn-small btn-warning">
+                                                <a href="{{ url('/dosen/' . $dosen->id . '/edit') }}"
+                                                    class="btn btn-small btn-warning">
                                                     Edit
                                                 </a>
                                                 <button type="submit" class="btn btn-small btn-danger">Delete</button>

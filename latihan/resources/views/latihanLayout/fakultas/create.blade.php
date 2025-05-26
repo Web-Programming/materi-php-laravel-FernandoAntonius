@@ -14,7 +14,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-end">
-                        <li class="breadcrumb-item"><a href="{{ url("/") }}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ url("/user") }}">Home</a></li>
                         <li class="breadcrumb-item"><a href="{{ url("/fakultas") }}">Fakultas</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Create Fakultas</li>
                     </ol>
